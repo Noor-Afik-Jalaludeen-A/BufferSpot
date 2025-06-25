@@ -1,0 +1,122 @@
+{% extends "Blog/base.html" %}
+{% block content %}
+
+<style>
+    .post-block:hover {
+        transform: translateY(-5px);
+        transition: all 0.2s ease-in-out;
+        background-color: #fefefe;
+    }
+</style>
+<form method="get" action="{% url 'blog-home' %}" class="form-inline mb-4 text-center fw-bold mb-4 border-bottom pb-3">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search blog..." name="q" value="{{ request.GET.q }}">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>
+
+<h1 class="text-center fw-bold mb-4 border-bottom pb-3">Explore Latest Tech Blog Posts</h1>
+
+{% for post in posts %}
+<div class="bg-light rounded-4 shadow-sm p-4 mb-5 border-start border-5 border-primary post-block">
+    <div class="d-flex align-items-center mb-3">
+        <img src="{{ post.author.profile.image.url }}"
+             class="rounded-circle mr-3 border border-2"
+             alt="Author Image"
+             style="width: 60px; height: 60px; object-fit: cover;">
+        <div>
+            <a href="{% url 'user-posts' post.author.username %}"
+               class="text-dark font-weight-bold text-decoration-none">
+               {{ post.author }}
+            </a>
+            <div class="small text-muted">{{ post.date_posted|date:"F d, Y" }}</div>
+        </div>
+    </div>
+
+    <h3 class="font-weight-bold mb-2">
+        <a href="{% url 'post-detail' post.id %}" class="text-primary text-decoration-none">
+            {{ post.title }}
+        </a>
+    </h3>
+    <p class="text-muted">{{ post.content|linebreaksbr|truncatewords:40 }}</p>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+        <a href="{% url 'post-detail' post.id %}" class="btn btn-outline-primary btn-sm">Read More</a>
+        {% if post.author == user %}
+        <div>
+            <a href="{% url 'post-update' post.id %}" class="btn btn-outline-secondary btn-sm mr-2">Edit</a>
+            <a href="{% url 'post-delete' post.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% empty %}
+    <p class="text-center text-muted">No blog posts found. Start writing one!</p>
+{% endfor %}
+
+
+<!-- Pagination -->
+{% if is_paginated %}
+<nav class="d-flex justify-content-center">
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page=1">&laquo;</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if num == page_obj.number %}
+                <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+<div class="card mb-3 shadow-sm">
+    <div class="card-header bg-success text-white fw-bold">
+        Top Contributors
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for author in top_authors %}
+        <li class="list-group-item d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <img src="{{ author.profile.image.url }}"
+                     alt="Profile Picture"
+                     class="rounded-circle mr-3 border"
+                     style="width: 40px; height: 40px; object-fit: cover;">
+                <a href="{% url 'user-posts' author.username %}" class="ml-2 text-dark font-weight-bold">
+                    {{ author.username }}
+                </a>
+            </div>
+            <span class="badge badge-success badge-pill">{{ author.post_count }}</span>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No authors yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="card mb-3 shadow-sm">
+    <div class="card-header bg-warning text-dark fw-bold">
+        Trending Posts
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for post in trending_posts %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="{% url 'post-detail' post.pk %}">{{ post.title|truncatechars:40 }}</a>
+            <span class="badge badge-warning badge-pill">{{ post.views }} views</span>
+        </li>
+        {% empty %}
+        <li class="list-group-item">No trending posts yet.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock content %}

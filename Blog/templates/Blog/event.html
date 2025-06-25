@@ -1,0 +1,54 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow border-0">
+                <div class="card-header bg-info text-white text-center">
+                    <h3 class="mb-0"> Project Events</h3>
+                </div>
+                <div class="card-body">
+                    {% comment %} Replace or loop through dynamic event data here {% endcomment %}
+                    
+                    <div class="event mb-4 p-3 border-left border-info">
+                        <h5 class="text-info mb-1"> Hackathon: Build a Blog Feature</h5>
+                        <small class="text-muted">Date: July 1, 2025 | Time: 10:00 AM - 4:00 PM</small>
+                        <p class="mt-2">
+                            Join us for a one-day hackathon where you’ll collaborate with fellow developers to build cool features like search, tagging, and comment sections.
+                        </p>
+                        <span class="badge badge-pill badge-success">Open</span>
+                    </div>
+
+                    <hr>
+
+                    <div class="event mb-4 p-3 border-left border-warning">
+                        <h5 class="text-warning mb-1"> Webinar: Django Deployment to Heroku</h5>
+                        <small class="text-muted">Date: June 25, 2025 | Time: 7:00 PM IST</small>
+                        <p class="mt-2">
+                            Learn how to take your Django blog live by deploying it to Heroku. Step-by-step tutorial included.
+                        </p>
+                        <span class="badge badge-pill badge-warning">Upcoming</span>
+                    </div>
+
+                    <hr>
+
+                    <div class="event mb-4 p-3 border-left border-danger">
+                        <h5 class="text-danger mb-1"> Maintenance Downtime</h5>
+                        <small class="text-muted">Date: June 20, 2025 | Time: 12:00 AM - 4:00 AM</small>
+                        <p class="mt-2">
+                            The platform will undergo scheduled maintenance. Access will be temporarily restricted. Please save your work in advance.
+                        </p>
+                        <span class="badge badge-pill badge-danger">Closed</span>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="{% url 'blog-home' %}" class="btn btn-outline-primary">
+                            ← Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

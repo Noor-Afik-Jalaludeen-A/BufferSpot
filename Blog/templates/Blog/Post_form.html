@@ -1,0 +1,73 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Form Column -->
+        <div class="col-lg-6 mb-4">
+            <div class="bg-light shadow rounded-4 p-4 border-start border-5 border-primary">
+                <div class="text-center mb-4">
+                    <h3 class="fw-bold text-primary">
+                        {% if form.instance.pk %} Edit Blog Post{% else %} Create a New Blog Post{% endif %}
+                    </h3>
+                    <p class="text-muted">Start writing your tech blogs and see the live preview here</p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label fw-semibold">Title</label>
+                        <input type="text" name="title" id="title"
+                               class="form-control"
+                               value="{{ form.title.value|default_if_none:'' }}"
+                               oninput="updatePreview()">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="content" class="form-label fw-semibold">Content</label>
+                        <textarea name="content" id="content" rows="6"
+                                  class="form-control"
+                                  oninput="updatePreview()">{{ form.content.value|default_if_none:'' }}</textarea>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg shadow-sm">
+                            {% if form.instance.pk %}Update Post{% else %}Submit Post{% endif %}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Live Preview Column -->
+        <div class="col-lg-6">
+            <div class="bg-white shadow rounded-4 p-4 border-start border-5 border-success">
+                <div class="text-center mb-3">
+                    <h4 class="fw-bold text-success">Live Preview</h4>
+                </div>
+                <div class="mb-2 text-muted small">Title</div>
+                <h5 id="preview-title" class="fw-bold border-bottom pb-2 text-secondary">
+                    {{ form.title.value|default:"Your blog title will appear here" }}
+                </h5>
+
+                <div class="mt-4 mb-2 text-muted small">Content</div>
+                <p id="preview-content" style="white-space: pre-line; min-height: 150px;">
+                    {{ form.content.value|default:"Your blog content will appear here..." }}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function updatePreview() {
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('content').value;
+
+    document.getElementById('preview-title').textContent = title || 'Your blog title will appear here';
+    document.getElementById('preview-content').textContent = content || 'Your blog content will appear here...';
+}
+
+window.addEventListener('DOMContentLoaded', updatePreview);
+</script>
+{% endblock content %}

@@ -1,0 +1,57 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow border-0">
+                <div class="card-header bg-secondary text-white text-center">
+                    <h3 class="mb-0"> Developer Resources</h3>
+                </div>
+                <div class="card-body">
+                    <p class="lead text-muted text-center mb-4">
+                        A curated list of tools, documentation, and references to help you build, deploy, and grow your projects using this tech blog platform.
+                    </p>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong> Django Official Documentation:</strong>
+                            <a href="https://docs.djangoproject.com/en/stable/" target="_blank">Read here</a>
+                            <p class="mb-0 text-muted">The official Django docs – learn about views, models, templates, and more.</p>
+                        </li>
+
+                        <li class="list-group-item">
+                            <strong> Bootstrap 4 Components:</strong>
+                            <a href="https://getbootstrap.com/docs/4.0/components/" target="_blank">Explore components</a>
+                            <p class="mb-0 text-muted">Customize your UI using Bootstrap cards, modals, alerts, and responsive layouts.</p>
+                        </li>
+
+                        <li class="list-group-item">
+                            <strong> Deployment Guide (Heroku):</strong>
+                            <a href="https://devcenter.heroku.com/categories/python-support" target="_blank">Deploy with Heroku</a>
+                            <p class="mb-0 text-muted">Step-by-step instructions for deploying your Django blog to the cloud.</p>
+                        </li>
+
+                        <li class="list-group-item">
+                            <strong> Django Packages:</strong>
+                            <a href="https://djangopackages.org/" target="_blank">Browse packages</a>
+                            <p class="mb-0 text-muted">Explore reusable Django apps like comment systems, search, image handling, etc.</p>
+                        </li>
+
+                        <li class="list-group-item">
+                            <strong> Community Forums:</strong>
+                            <a href="https://forum.djangoproject.com/" target="_blank">Join the Django Forum</a>
+                            <p class="mb-0 text-muted">Ask questions, share knowledge, and connect with fellow developers.</p>
+                        </li>
+                    </ul>
+
+                    <div class="text-center mt-4">
+                        <a href="{% url 'blog-home' %}" class="btn btn-outline-secondary">
+                            ← Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

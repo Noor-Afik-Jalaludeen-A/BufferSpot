@@ -1,0 +1,72 @@
+{% extends 'Blog/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <!-- Profile Card -->
+    <div class="card mb-4 shadow-sm border-0">
+        <div class="card-body">
+            <div class="row align-items-center">
+                <!-- Profile Image -->
+                <div class="col-md-4 text-center mb-3 mb-md-0">
+                    <img src="{{ user.profile.image.url }}" 
+                         alt="Profile Image" 
+                         class="img-fluid rounded-circle border"
+                         style="width: 160px; height: 160px; object-fit: cover;">
+                </div>
+
+                <!-- User Info -->
+                <div class="col-md-8">
+                    <h3 class="fw-bold">{{ user.username }}</h3>
+                    <p class="text-muted mb-1">{{ user.email }}</p>
+                    <span class="badge bg-primary">Member</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Update Form -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-success text-white fw-semibold">Update Profile</div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- User Form Fields -->
+                {% for field in context.u_form %}
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger small">
+                                {{ field.errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <!-- Profile Form Fields -->
+                {% for field in context.p_form %}
+                    <div class="mb-3">
+                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.errors %}
+                            <div class="text-danger small">
+                                {{ field.errors|striptags }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <!-- Error Message -->
+                {% if context.error %}
+                    <div class="alert alert-danger">{{ context.error }}</div>
+                {% endif %}
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success px-4">Update Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

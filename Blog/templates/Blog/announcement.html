@@ -1,0 +1,50 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-warning text-dark text-center">
+                    <h3 class="mb-0"> Project Announcements</h3>
+                </div>
+                <div class="card-body">
+                    {% comment %} Example static announcements — can be replaced with a dynamic loop {% endcomment %}
+                    <div class="announcement mb-4">
+                        <h5 class="text-primary"> New Feature Released: Live Blog Preview</h5>
+                        <small class="text-muted">Posted on: June 18, 2025</small>
+                        <p class="mt-2">
+                            We’ve added a real-time blog preview feature so you can see your post as you write it! Try it out when creating a new post.
+                        </p>
+                    </div>
+                    
+                    <hr>
+
+                    <div class="announcement mb-4">
+                        <h5 class="text-success"> User Profiles Upgraded</h5>
+                        <small class="text-muted">Posted on: June 16, 2025</small>
+                        <p class="mt-2">
+                            Now you can upload your profile picture and see other users' images on their posts. Go to your profile to update yours!
+                        </p>
+                    </div>
+
+                    <hr>
+
+                    <div class="announcement mb-4">
+                        <h5 class="text-danger"> Maintenance Downtime</h5>
+                        <small class="text-muted">Posted on: June 14, 2025</small>
+                        <p class="mt-2">
+                            Our site will be under maintenance from <strong>June 20th 12:00 AM to 4:00 AM IST</strong>. Please plan accordingly. Thank you for your patience.
+                        </p>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="{% url 'blog-home' %}" class="btn btn-outline-secondary">
+                            ← Back to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
