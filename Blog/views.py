@@ -15,11 +15,11 @@ def home(request):
         'posts': Post.objects.all(),
         'title': 'Afik',
     }
-    return render(request, 'Blog/Home.html', context)
+    return render(request, 'blog/Home.html', context)
 
 class PostListView(ListView):
     model = Post
-    template_name = 'Blog/Home.html'  # <app>/<model>_<viewtype>.html
+    template_name = 'blog/Home.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering = ['-date_posted']
     paginate_by = 4 # Number of posts per page
@@ -43,7 +43,7 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
-    template_name = 'Blog/Post_detail.html'  # <app>/<model>_<viewtype>.html
+    template_name = 'blog/Post_detail.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'post'
 
     def get_object(self, queryset=None):
@@ -57,7 +57,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin,CreateView):
     model = Post
-    template_name = 'Blog/Post_form.html'
+    template_name = 'blog/Post_form.html'
     fields = ['title', 'content']
 
     def form_valid(self, form):
@@ -65,7 +65,7 @@ class PostCreateView(LoginRequiredMixin,CreateView):
         return super().form_valid(form)
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    template_name = 'Blog/Post_form.html'
+    template_name = 'blog/Post_form.html'
     fields = ['title', 'content']
 
     def form_valid(self, form):
@@ -78,7 +78,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
-    template_name = 'Blog/Post_confirm_delete.html'
+    template_name = 'blog/Post_confirm_delete.html'
     success_url = reverse_lazy('blog-home')
 
     def test_func(self):
@@ -87,7 +87,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class UserPostListView(ListView):
     model = Post
-    template_name = 'Blog/user_posts.html'  # <app>/<model>_<viewtype>.html
+    template_name = 'blog/user_posts.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     paginate_by = 2 # Number of posts per page
 
@@ -96,19 +96,19 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 def about(request):
-    return render(request, 'Blog/About.html')
+    return render(request, 'blog/About.html')
 
 def announcements(request):
     context = {
         'title': 'Announcements',
     }
-    return render(request, 'Blog/announcement.html', context)
+    return render(request, 'blog/announcement.html', context)
 
 def event(request):
-    return render(request, 'Blog/event.html', {'title': 'Events'})
+    return render(request, 'blog/event.html', {'title': 'Events'})
 
 def resources(request):
-    return render(request, 'Blog/resources.html', {'title': 'Resources'})
+    return render(request, 'blog/resources.html', {'title': 'Resources'})
 
 def contact(request):
-    return render(request, 'Blog/contact.html', {'title': 'Contact Us'})
+    return render(request, 'blog/contact.html', {'title': 'Contact Us'})
