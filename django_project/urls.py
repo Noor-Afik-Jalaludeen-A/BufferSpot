@@ -32,7 +32,7 @@ def setup_view(request):
 
         # Create superuser only if it doesn't exist
         if not User.objects.filter(username='admin').exists():
-            User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
+            User.objects.create_superuser('NoorAfikJalaludeenA', 'noorafikjalaludeen2204@gmail.com', 'Afza@2122')
         
         return HttpResponse("✅ Data loaded and superuser created successfully.")
     except Exception as e:
