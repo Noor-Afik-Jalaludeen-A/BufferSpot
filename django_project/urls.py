@@ -38,13 +38,14 @@ def setup_view(request):
     except Exception as e:
         return HttpResponse(f"❌ Error: {str(e)}")
 
-urlpatterns += [
-    path('setup/', setup_view),
-]
+# urlpatterns += [
+#     path('setup/', setup_view),
+# ]
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('setup/', setup_view),
     path('', include('Blog.urls')),
     path('', include('users.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
