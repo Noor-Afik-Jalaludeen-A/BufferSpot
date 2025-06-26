@@ -21,6 +21,27 @@ from django.urls import include
 from users import views as user_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.http import HttpResponse
+from django.core.management import call_command
+from django.contrib.auth.models import User
+
+def setup_view(request):
+    try:
+        # Load DB backup
+        call_command('loaddata', 'db_backup.json')
+
+        # Create superuser only if it doesn't exist
+        if not User.objects.filter(username='admin').exists():
+            User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
+        
+        return HttpResponse("✅ Data loaded and superuser created successfully.")
+    except Exception as e:
+        return HttpResponse(f"❌ Error: {str(e)}")
+
+urlpatterns += [
+    path('setup/', setup_view),
+]
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
