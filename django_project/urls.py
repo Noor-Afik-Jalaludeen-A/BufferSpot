@@ -28,18 +28,21 @@ from django.apps import apps
 
 def setup_view(request):
     try:
+        # Clear all data from all models
         for model in apps.get_models():
             model.objects.all().delete()
-        # Load DB backup
+
+        # Load your fixture first
         call_command('loaddata', 'db_backup.json')
 
-        # Create superuser only if it doesn't exist
-        if not User.objects.filter(username='admin').exists():
+        # Only create superuser if not already present in the loaded fixture
+        if not User.objects.filter(username='NoorAfikJalaludeenA').exists():
             User.objects.create_superuser('NoorAfikJalaludeenA', 'noorafikjalaludeen2204@gmail.com', 'Afza@2122')
-        
+
         return HttpResponse("✅ Data loaded and superuser created successfully.")
     except Exception as e:
         return HttpResponse(f"❌ Error: {str(e)}")
+
 
 # urlpatterns += [
 #     path('setup/', setup_view),
