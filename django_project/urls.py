@@ -24,9 +24,12 @@ from django.conf.urls.static import static
 from django.http import HttpResponse
 from django.core.management import call_command
 from django.contrib.auth.models import User
+from django.apps import apps
 
 def setup_view(request):
     try:
+        for model in apps.get_models():
+            model.objects.all().delete()
         # Load DB backup
         call_command('loaddata', 'db_backup.json')
 
