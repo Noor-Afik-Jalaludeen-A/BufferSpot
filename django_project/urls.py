@@ -25,23 +25,32 @@ from django.http import HttpResponse
 from django.core.management import call_command
 from django.contrib.auth.models import User
 from django.apps import apps
+from django.db import connection
 
 def setup_view(request):
     try:
-        # Clear all data from all models
-        for model in apps.get_models():
-            model.objects.all().delete()
+        # Disable constraints temporarily (for safe deletion order)
+        with connection.constraint_checks_disabled():
+            for model in apps.get_models():
+                model.objects.all().delete()
+        connection.check_constraints()
 
-        # Load your fixture first
+        # Load fixture
         call_command('loaddata', 'db_backup.json')
 
-        # Only create superuser if not already present in the loaded fixture
+        # Only create superuser if not already present
         if not User.objects.filter(username='NoorAfikJalaludeenA').exists():
-            User.objects.create_superuser('NoorAfikJalaludeenA', 'noorafikjalaludeen2204@gmail.com', 'Afza@2122')
+            User.objects.create_superuser(
+                username='NoorAfikJalaludeenA',
+                email='noorafikjalaludeen2204@gmail.com',
+                password='Afza@2122'
+            )
 
         return HttpResponse("✅ Data loaded and superuser created successfully.")
+
     except Exception as e:
         return HttpResponse(f"❌ Error: {str(e)}")
+
 
 
 # urlpatterns += [
