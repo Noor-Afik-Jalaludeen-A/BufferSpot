@@ -26,7 +26,7 @@
         {% if post.author == user %}
             <div>
                 <a href="{% url 'post-update' post.id %}" class="btn btn-outline-secondary btn-sm me-2">
-                    <i class="bi bi-pencil-square"></i> Edit
+                    <i class="bi bi-pencil-square"></i> Edit Post
                 </a>
                 <a href="{% url 'post-delete' post.id %}" class="btn btn-outline-danger btn-sm">
                     <i class="bi bi-trash3"></i> Delete
